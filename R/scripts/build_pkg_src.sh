@@ -93,10 +93,10 @@ if "${INSTRUMENTED}"; then
 fi
 # Repackage tar with package name as root, and without mtime.
 (
-  cd "${TMP_SRC}"
   # Reset mtime for all files and directories.
   # R's help DB is specially sensitive to timestamps of .Rd files in man/.
   TZ=UTC find "${TMP_SRC}" -exec touch -amt 197001010000 {} \+
+  cd "${TMP_SRC}"
   if [[ "$(tar --version)" == "bsdtar"* ]]; then
     flags=("-s" "@^@${PKG_NAME}/@")
   else

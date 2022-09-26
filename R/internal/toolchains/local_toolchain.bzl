@@ -104,10 +104,10 @@ def _local_r_toolchain_impl(rctx):
             llvm_cov = Label("%s//:llvm-cov" % makevars_repo)
             tools.append(llvm_cov)
 
-    _env_vars = rctx.attr.env_vars if rctx.attr.env_vars else {}
+    env_vars_str = "None"
     if os == "darwin":
         # http://blog.llvm.org/2019/11/deterministic-builds-with-clang-and-lld.html
-        _env_vars["ZERO_AR_DATE"] = "1"
+        env_vars_str = "{\"ZERO_AR_DATE\": \"1\"}"
 
     state_file = "system_state.txt"
     if not r_found:
@@ -122,7 +122,7 @@ def _local_r_toolchain_impl(rctx):
         version = "\"%s\"" % rctx.attr.version if rctx.attr.version else "None",
         args = ", ".join(["\"%s\"" % arg for arg in rctx.attr.args]),
         makevars_site = makevars_site_str,
-        env_vars = _env_vars,
+        env_vars = env_vars_str,
         tools = ", ".join(["\"%s\"" % tool for tool in tools]),
         state_file = state_file,
     ))
@@ -145,10 +145,6 @@ local_r_toolchain = repository_rule(
         ),
         "version": attr.string(
             doc = "version attribute value for r_toolchain",
-        ),
-        "env_vars": attr.string_dict(
-            doc = "Dictionary containing envionment variables for use with the toolchain",
-            default = {},
         ),
         "args": attr.string_list(
             default = [

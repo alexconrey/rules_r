@@ -102,8 +102,6 @@ fi
     flags=("--transform" "s@^@${PKG_NAME}/@")
   fi
   cd "${TMP_SRC}"
-  pwd
-  tree || ls -la 
   # Ask gzip to not store the timestamp.
   tar "${flags[@]}" -cf - -- * | gzip --no-name -c > "${TMP_SRC_TAR}"
 )

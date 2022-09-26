@@ -99,7 +99,7 @@ if [[ "${tmp_path_suffix}" == "." ]]; then
   tmp_path_suffix="_WORKSPACE_ROOT_"
 fi
 
-R_DIR="bazel-out/R"
+R_DIR="$(pwd)/bazel-out/R"
 
 # Obtain a lock across all builds on this machine for this tmp_path_suffix.
 lock_dir="${R_DIR}/locks"

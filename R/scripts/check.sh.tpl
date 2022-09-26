@@ -20,7 +20,7 @@ EXEC_ROOT=$(pwd -P)
 # Export environment variables, if any.
 {export_env_vars}
 
-if "${BAZEL_R_DEBUG:-"true"}"; then
+if "${BAZEL_R_DEBUG:-"false"}"; then
   set -x
 fi
 
@@ -87,7 +87,7 @@ r_libs="${r_libs//_EXEC_ROOT_/$PWD/}"
 (IFS=":"; for lib in ${r_libs}; do ln -s "${lib}/"* "${R_LIBS_USER}"; done)
 
 # Set HOME for pandoc for building vignettes.
-TMP_HOME="bazel-out/R/home"
+TMP_HOME="${EXEC_ROOT}/R/home"
 mkdir -p "${TMP_HOME}"
 export HOME="${TMP_HOME}"
 

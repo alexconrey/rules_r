@@ -31,7 +31,7 @@ silent() {
     echo "${OUT}"
     exit 1
   fi
-  if "${BAZEL_R_VERBOSE:-"true"}"; then
+  if "${BAZEL_R_VERBOSE:-"false"}"; then
     echo "${OUT}"
   fi
   set -e
@@ -76,7 +76,7 @@ export EXEC_ROOT
 
 # Common setup for environment and tools.
 eval "${EXPORT_ENV_VARS_CMD}"
-if "${BAZEL_R_DEBUG:-"true"}"; then
+if "${BAZEL_R_DEBUG:-"false"}"; then
   set -x
 fi
 eval "${BUILD_TOOLS_EXPORT_CMD}"
@@ -100,7 +100,7 @@ if [[ "${tmp_path_suffix}" == "." ]]; then
   tmp_path_suffix="_WORKSPACE_ROOT_"
 fi
 
-R_DIR="$(pwd)/bazel-out/R"
+R_DIR="${EXEC_ROOT}/R"
 
 # Obtain a lock across all builds on this machine for this tmp_path_suffix.
 lock_dir="${R_DIR}/locks"

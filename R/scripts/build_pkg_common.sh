@@ -72,6 +72,7 @@ lock() {
 export GCOV_EXIT_AT_ERROR=1
 
 EXEC_ROOT=$(pwd -P)
+export EXEC_ROOT
 
 # Common setup for environment and tools.
 eval "${EXPORT_ENV_VARS_CMD}"
@@ -118,7 +119,7 @@ mkdir -p "${TMP_LIB}"
 mkdir -p "${TMP_SRC}"
 
 # Ensure we have a clean site Makevars file, using user-provided content, if applicable.
-tmp_mkvars="$(mktemp --tmpdir=bazel-out)"
+tmp_mkvars="$(mktemp --tmpdir=${EXEC_ROOT})"
 TMP_FILES+=("${tmp_mkvars}")
 if [[ "${R_MAKEVARS_SITE:-}" ]]; then
   sed -e "s@_EXEC_ROOT_@${EXEC_ROOT}/@" "${EXEC_ROOT}/${R_MAKEVARS_SITE}" > "${tmp_mkvars}"
@@ -127,7 +128,7 @@ export R_MAKEVARS_SITE="${tmp_mkvars}"
 
 # Same for personal Makevars file.
 if [[ "${R_MAKEVARS_USER:-}" ]]; then
-  tmp_mkvars="$(mktemp --tmpdir=bazel-out)"
+  tmp_mkvars="$(mktemp --tmpdir=${EXEC_ROOT})"
   TMP_FILES+=("${tmp_mkvars}")
   sed -e "s@_EXEC_ROOT_@${EXEC_ROOT}/@" "${EXEC_ROOT}/${R_MAKEVARS_USER}" > "${tmp_mkvars}"
   export R_MAKEVARS_USER="${tmp_mkvars}"

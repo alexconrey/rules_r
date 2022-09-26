@@ -75,7 +75,7 @@ PKG_FFLAGS += ${pkg_cppflags}   # Fortran 77
 fi
 
 export R_LIBS=dummy
-R_LIBS_USER="$(mktemp -d --tmpdir=bazel-out)"
+R_LIBS_USER="$(mktemp -d --tmpdir=${EXEC_ROOT})"
 export R_LIBS_USER
 cleanup() {
   rm -rf "${R_LIBS_USER}"

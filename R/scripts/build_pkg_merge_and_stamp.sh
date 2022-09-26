@@ -15,7 +15,9 @@
 
 set -euo pipefail
 
-dir="$(mktemp -d --tmpdir=bazel-out)"
+EXEC_ROOT=$(pwd -P)
+
+dir="$(mktemp -d --tmpdir=${EXEC_ROOT})"
 tar -C "${dir}" -xzf "${IN_TAR}"
 rsync --recursive --copy-links --no-perms --chmod=u+w --executability --specials \
     "${PKG_SRC_DIR}/tests" "${dir}/${PKG_NAME}"

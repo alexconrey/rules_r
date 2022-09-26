@@ -17,13 +17,15 @@ set -euo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
 
+EXEC_ROOT=$(pwd -P)
+
 source "../setup-bazel.sh"
 
 # Clean up bazel-* symlinks in workspace root to not confuse bazel when running
 # with a different output_path.
 rm "$("${bazel}" info workspace)/bazel-*" 2>/dev/null || true
 
-tmpdir="$(mktemp -d --tmpdir=bazel-out)"
+tmpdir="$(mktemp -d --tmpdir=${EXEC_ROOT})"
 readonly tmpdir
 readonly first="${tmpdir}/first"
 readonly second="${tmpdir}/second"

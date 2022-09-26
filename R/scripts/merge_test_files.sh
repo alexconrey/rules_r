@@ -17,13 +17,15 @@ set -euo pipefail
 
 tar -xzf "${IN_TAR}" "${PKG_NAME}/DESCRIPTION"
 
+EXEC_ROOT=$(pwd -P)
+
 # Uncompress the original tar.
 new_tar="${IN_TAR}"
 new_tar="${new_tar%.gz}"
 gunzip -c "${IN_TAR}" > "${new_tar}"
 
 # Copy the test files so we can reset their mtime so make the tarball reproducible.
-dir=$(mktemp -d --tmpdir=bazel-out)
+dir=$(mktemp -d --tmpdir=${EXEC_ROOT})
 mkdir -p "${dir}"
 rsync --recursive --copy-links --no-perms --chmod=u+w --executability --specials \
   "${PKG_SRC_DIR}/tests" "${dir}/${PKG_NAME}"

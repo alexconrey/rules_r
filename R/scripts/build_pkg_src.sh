@@ -95,6 +95,7 @@ fi
 (
   # Reset mtime for all files and directories.
   # R's help DB is specially sensitive to timestamps of .Rd files in man/.
+  pwd
   TZ=UTC find "${TMP_SRC}" -exec touch -amt 197001010000 {} \+
   cd "${TMP_SRC}"
   if [[ "$(tar --version)" == "bsdtar"* ]]; then
@@ -102,6 +103,8 @@ fi
   else
     flags=("--transform" "s@^@${PKG_NAME}/@")
   fi
+  pwd
+  tree || ls -la 
   # Ask gzip to not store the timestamp.
   tar "${flags[@]}" -cf - -- * | gzip --no-name -c > "${TMP_SRC_TAR}"
 )
@@ -110,4 +113,4 @@ fi
 mv "${TMP_SRC_TAR}" "${PKG_SRC_ARCHIVE}"
 
 trap - EXIT
-cleanup
+# cleanup

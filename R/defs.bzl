@@ -41,14 +41,6 @@ load("@com_grail_rules_r//R/internal:tests.bzl", _r_pkg_test = "r_pkg_test", _r_
 load("@com_grail_rules_r//R/internal:binary.bzl", _r_binary = "r_binary", _r_markdown = "r_markdown", _r_test = "r_test")
 load("@com_grail_rules_r//R/internal/toolchains:toolchain.bzl", _r_toolchain = "r_toolchain")
 
-r_source_pkg = _r_source_pkg
-
-r_binary_pkg = _r_binary_pkg
-
-r_pkg = _r_pkg
-
-r_library = _r_library
-
 r_library_tar = _r_library_tar
 
 r_pkg_test = _r_pkg_test
@@ -62,6 +54,66 @@ r_markdown = _r_markdown
 r_test = _r_test
 
 r_toolchain = _r_toolchain
+
+def r_pkg(**kwargs):
+    """Convenience macro for r_pkg to include global tag presence."""
+    
+    _tags = [
+        'no-sandbox' #Disable sandboxing for r_pkg builds in the monorepo.
+    ]
+    if 'tags' in kwargs:
+        _tags = _tags + kwargs['tags']
+        kwargs.pop('tags')
+
+    _r_pkg(
+        tags = _tags,
+        **kwargs
+    )
+
+def r_source_pkg(**kwargs):
+    """Convenience macro for r_source_pkg to include global tag presence."""
+    
+    _tags = [
+        'no-sandbox' #Disable sandboxing for r_source_pkg builds in the monorepo.
+    ]
+    if 'tags' in kwargs:
+        _tags = _tags + kwargs['tags']
+        kwargs.pop('tags')
+
+    _r_source_pkg(
+        tags = _tags,
+        **kwargs
+    )
+
+def r_binary_pkg(**kwargs):
+    """Convenience macro for r_binary_pkg to include global tag presence."""
+    
+    _tags = [
+        'no-sandbox' #Disable sandboxing for r_binary_pkg builds in the monorepo.
+    ]
+    if 'tags' in kwargs:
+        _tags = _tags + kwargs['tags']
+        kwargs.pop('tags')
+
+    _r_binary_pkg(
+        tags = _tags,
+        **kwargs
+    )
+
+def r_library(**kwargs):
+    """Convenience macro for r_library to include global tag presence."""
+    
+    _tags = [
+        'no-sandbox' #Disable sandboxing for r_library builds in the monorepo.
+    ]
+    if 'tags' in kwargs:
+        _tags = _tags + kwargs['tags']
+        kwargs.pop('tags')
+
+    _r_library(
+        tags = _tags,
+        **kwargs
+    )
 
 def r_package(pkg_name, pkg_srcs, pkg_deps, pkg_suggested_deps = []):
     """Convenience macro to generate the r_pkg and r_library targets."""

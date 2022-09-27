@@ -43,10 +43,6 @@ load("@com_grail_rules_r//R/internal/toolchains:toolchain.bzl", _r_toolchain = "
 
 r_library_tar = _r_library_tar
 
-r_pkg_test = _r_pkg_test
-
-r_unit_test = _r_unit_test
-
 r_binary = _r_binary
 
 r_markdown = _r_markdown
@@ -66,6 +62,36 @@ def r_pkg(**kwargs):
         kwargs.pop('tags')
 
     _r_pkg(
+        tags = _tags,
+        **kwargs
+    )
+
+def r_pkg_test(**kwargs):
+    """Convenience macro for r_pkg_test to include global tag presence."""
+    
+    _tags = [
+        'no-sandbox' #Disable sandboxing for r_pkg_test builds in the monorepo.
+    ]
+    if 'tags' in kwargs:
+        _tags = _tags + kwargs['tags']
+        kwargs.pop('tags')
+
+    _r_pkg_test(
+        tags = _tags,
+        **kwargs
+    )
+
+def r_unit_test(**kwargs):
+    """Convenience macro for r_unit_test to include global tag presence."""
+    
+    _tags = [
+        'no-sandbox' #Disable sandboxing for r_unit_test builds in the monorepo.
+    ]
+    if 'tags' in kwargs:
+        _tags = _tags + kwargs['tags']
+        kwargs.pop('tags')
+
+    _r_unit_test(
         tags = _tags,
         **kwargs
     )

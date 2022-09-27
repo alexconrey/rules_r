@@ -68,8 +68,8 @@ bazel_libs <- .libPaths()
 bazel_libs <- bazel_libs[! bazel_libs %in% c(.Library, .Library.site)]
 if ("devtools" %in% installed.packages(bazel_libs)[, "Package"]) {
   devtools::document(pkg='${TMP_SRC}', roclets=c(${ROCLETS}))
-} else {
-  roxygen2::roxygenize(package.dir='${TMP_SRC}', roclets=c(${ROCLETS}))
+#} else {
+#  roxygen2::roxygenize(package.dir='${TMP_SRC}', roclets=c(${ROCLETS}))
 }
 EOF
 fi

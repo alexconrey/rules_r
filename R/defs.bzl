@@ -70,7 +70,8 @@ def r_pkg_test(**kwargs):
     """Convenience macro for r_pkg_test to include global tag presence."""
     
     _tags = [
-        'no-sandbox' #Disable sandboxing for r_pkg_test builds in the monorepo.
+        'no-sandbox', # Disable sandboxing for r_pkg_test builds in the monorepo.
+        'exclusive', # Only run 1 R test at a time
     ]
     if 'tags' in kwargs:
         _tags = _tags + kwargs['tags']
@@ -85,7 +86,8 @@ def r_unit_test(**kwargs):
     """Convenience macro for r_unit_test to include global tag presence."""
     
     _tags = [
-        'no-sandbox' #Disable sandboxing for r_unit_test builds in the monorepo.
+        'no-sandbox', #Disable sandboxing for r_unit_test builds in the monorepo.
+        'exclusive', # Only run 1 R test at a time
     ]
     if 'tags' in kwargs:
         _tags = _tags + kwargs['tags']

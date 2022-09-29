@@ -20,7 +20,7 @@ PWD=$(pwd -P)
 # Export environment variables, if any.
 {export_env_vars}
 
-if "${BAZEL_R_DEBUG:-"false"}"; then
+if "${BAZEL_R_DEBUG:-"true"}"; then
   set -x
 fi
 
@@ -61,7 +61,14 @@ mkdir "${R_LIBS_USER}"
 
 r_libs="{lib_dirs}"
 r_libs="${r_libs//_EXEC_ROOT_/$PWD/}"
-(IFS=":"; for lib in ${r_libs}; do ln -s "${lib}/"* "${R_LIBS_USER}"; done)
+(
+  IFS=":"
+  for lib in ${r_libs}; do
+    pwd
+    ls -la
+    ln -s "${lib}/"* "${R_LIBS_USER}"
+  done
+)
 
 # Copy the tests to a writable directory.
 cp -LR "${PKG_TESTS_DIR}/"* ${TEST_TMPDIR}

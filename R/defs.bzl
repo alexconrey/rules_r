@@ -47,9 +47,23 @@ r_binary = _r_binary
 
 r_markdown = _r_markdown
 
-r_test = _r_test
-
 r_toolchain = _r_toolchain
+
+def r_test(**kwargs):
+    """Convenience macro for r_test to include global tag presence."""
+    
+    _tags = [
+        'no-sandbox', #Disable sandboxing for r_test builds in the monorepo.
+        'exclusive'
+    ]
+    if 'tags' in kwargs:
+        _tags = _tags + kwargs['tags']
+        kwargs.pop('tags')
+
+    _r_test(
+        tags = _tags,
+        **kwargs
+    )
 
 def r_pkg(**kwargs):
     """Convenience macro for r_pkg to include global tag presence."""
@@ -70,7 +84,8 @@ def r_pkg_test(**kwargs):
     """Convenience macro for r_pkg_test to include global tag presence."""
     
     _tags = [
-        'no-sandbox' #Disable sandboxing for r_pkg_test builds in the monorepo.
+        'no-sandbox', #Disable sandboxing for r_pkg_test builds in the monorepo.
+        'exclusive'
     ]
     if 'tags' in kwargs:
         _tags = _tags + kwargs['tags']
@@ -85,7 +100,8 @@ def r_unit_test(**kwargs):
     """Convenience macro for r_unit_test to include global tag presence."""
     
     _tags = [
-        'no-sandbox' #Disable sandboxing for r_unit_test builds in the monorepo.
+        'no-sandbox', #Disable sandboxing for r_unit_test builds in the monorepo.
+        'exclusive'
     ]
     if 'tags' in kwargs:
         _tags = _tags + kwargs['tags']

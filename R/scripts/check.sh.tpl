@@ -94,7 +94,7 @@ export HOME="${TMP_HOME}"
 if [[ "{pkg_src_archive}" != "{pkg_name}.tar.gz" ]]; then
   pwd
   ls -la
-  test -L "${pkg_name.tar.gz}" || ln -s "{pkg_src_archive}" "{pkg_name}.tar.gz"
+  test -L "{pkg_name}.tar.gz" || ln -s "{pkg_src_archive}" "{pkg_name}.tar.gz"
 fi
 
 {R} CMD check {check_args} "{pkg_name}.tar.gz"

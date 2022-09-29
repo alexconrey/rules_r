@@ -92,9 +92,11 @@ mkdir -p "${TMP_HOME}"
 export HOME="${TMP_HOME}"
 
 if [[ "{pkg_src_archive}" != "{pkg_name}.tar.gz" ]]; then
-  pwd
-  ls -la
-  test -L "{pkg_name}.tar.gz" || ln -s "{pkg_src_archive}" "{pkg_name}.tar.gz"
+  # If the symlink to the expected file exists, remove and recreate it
+  test -L "{pkg_name}.tar.gz" && rm -f "{pkg_name}.tar.gz"
+
+  # Our path should be clear, attempt to create the symlink
+  ln -s "{pkg_src_archive}" "{pkg_name}.tar.gz"
 fi
 
 {R} CMD check {check_args} "{pkg_name}.tar.gz"

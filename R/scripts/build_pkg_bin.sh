@@ -45,7 +45,8 @@ if [[ "${DIRECT_FROM_SOURCE:-false}" ]]; then
 fi
 
 # Install the package to the common temp library.
-silent "${R}" CMD INSTALL --built-timestamp='' "${INSTALL_ARGS}" --no-lock --build --library="${TMP_LIB}" --clean "${TMP_SRC}"
+# silent "${R}" CMD INSTALL --built-timestamp='' "${INSTALL_ARGS}" --no-lock --build --library="${TMP_LIB}" --clean "${TMP_SRC}"
+silent "${R}" CMD INSTALL --built-timestamp='' "${INSTALL_ARGS}" --lock --build --library="${TMP_LIB}" --clean "${TMP_SRC}"
 rm -rf "${PKG_LIB_PATH:?}/${PKG_NAME}" # Delete empty directories to make way for move.
 mv -f "${TMP_LIB}/${PKG_NAME}" "${PKG_LIB_PATH}/"
 

@@ -70,4 +70,4 @@ if "${INSTRUMENTED}"; then
 fi
 
 trap - EXIT
-#cleanup
+cleanup

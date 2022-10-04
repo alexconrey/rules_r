@@ -111,4 +111,4 @@ fi
 mv "${TMP_SRC_TAR}" "${PKG_SRC_ARCHIVE}"
 
 trap - EXIT
-# cleanup
+cleanup

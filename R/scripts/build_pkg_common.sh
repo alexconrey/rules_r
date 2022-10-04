@@ -185,10 +185,14 @@ export R_LIBS_USER="${TMP_LIB}"
 
 symlink_r_libs() {
   local r_libs="${1}"
-  find "${R_LIBS_USER}" -maxdepth 1 -type l -delete
+  # find "${R_LIBS_USER}" -maxdepth 1 -type l -delete
+  find "${R_LIBS_USER}" -type l -delete
   (
   IFS=":"
   for lib in ${r_libs}; do
+    ls -la ${lib} 
+    ls -la ${R_LIBS_USER}
+    # test -L "${R_LIBS_USER}/${lib}" 
     ln -s "${lib}/"* "${R_LIBS_USER}"
   done
   )

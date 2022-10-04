@@ -19,6 +19,12 @@
 TMP_FILES=() # Temporary files to be cleaned up before exiting the script.
 
 cleanup() {
+  # Cleanup R packages
+  silent "${RSCRIPT}" - <<EOF
+ip <- installed.packages()
+pkgs.to.remove <- ip[!(ip[,"Priority"] %in% c("base", "recommended")), 1]
+sapply(pkgs.to.remove, remove.packages)
+EOF
   rm -rf "${TMP_FILES[@]+"${TMP_FILES[@]}"}"
 }
 trap 'cleanup; exit 1' INT HUP QUIT TERM EXIT

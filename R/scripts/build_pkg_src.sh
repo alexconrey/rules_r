@@ -64,6 +64,7 @@ fi
 if [[ "${ROCLETS}" ]]; then
   symlink_r_libs "${R_LIBS_ROCLETS//_EXEC_ROOT_/${EXEC_ROOT}/}"
   silent "${RSCRIPT}" - <<EOF
+install.packages("devtools")
 bazel_libs <- .libPaths()
 bazel_libs <- bazel_libs[! bazel_libs %in% c(.Library, .Library.site)]
 if ("devtools" %in% installed.packages(bazel_libs)[, "Package"]) {

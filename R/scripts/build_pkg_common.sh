@@ -197,3 +197,5 @@ symlink_r_libs() {
 # Set HOME for pandoc for building vignettes.
 mkdir -p "${TMP_HOME}"
 export HOME="${TMP_HOME}"
+
+export TZ=UTC
